@@ -1,10 +1,34 @@
 // simple motor control
 
 int motorPin02=2, motorPin03=3; 
-int tF = 4E3;     // time to leave forward motor on in ms (milliseconds)
+int tF = 10E3;     // time to leave forward motor on in ms (milliseconds)
 int tC = 0;       // time to leave both motors off (coasting) in ms
 int tR = 4E3;     // time to leave reverse motor on in ms
-int wait = 2000E3;  // time between restarting the entire program in ms
+int wait = 20E3;  // time between restarting the entire program in ms
+
+// equation 1 \
+x_f = x_i + v_i * t + 1/2 * a * t^2 <- speeding up, x_f == x_i in next eq \
+  x_i = 0 \
+  t = ? \
+  a = need to find 0.1332 m/s^2 \
+  v_i = 0
+
+int xFin = 100;
+double xFinHalf = xFin / 2;
+double acc = 0.1322;
+double tFrwd = sqrt((xFinHalf * acc)/2);
+
+double velFinalHalf = acc * tFrwd;
+
+// equation 2 \
+x_f = x_i + v_i * t + 1/2 * a * t^2 <- slowing down \
+  x_i = prev x_f \
+  t = ? \
+  a = need to find \
+  v_i = derive from prev eq ... comes from v_f = v_i + a * t
+
+//int tF = tFrwd * 1000;
+//int tR = tF;
 
 void setup() {
   pinMode(motorPin02,OUTPUT);
